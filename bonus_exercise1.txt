@@ -1,0 +1,13 @@
+# Bonus exercise
+P(M=kim)=0.5
+P(M=ann)=0.2
+P(M=boo)=0.3
+
+1. What is P(C=DQQ)?
+    (Only feasible with ann/boo and needs specific k)
+    1/2 * 1/26 = 1/52
+
+2. What is P(M=ann | C=DQQ)?
+    (P(C=DQQ | M=ann) * P(M=ann))/P(C=DQQ)
+    ((1/26) * (1/5))/(1/52) = 2/5
+
