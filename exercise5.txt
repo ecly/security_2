@@ -1,0 +1,42 @@
+Chinese remainder theorem:
+
+46^51 mod 55
+
+p, q = 5, 11
+
+55 mod 1 = 1
+55 mod 11 = 4
+
+(1, 2)
+
+for x in range(55):
+    if x % 5 == 1 and x % 11 == 2:
+        print(x)
+
+
+__________________________________
+N = 221
+e = 133
+
+e * d == 1 mod phi(N)
+
+1)
+factorize N
+
+choose 2
+
+2^e%N=15
+
+brute force till ==2
+
+---
+
+221 = 13 * 17
+
+phi(221) = (13-1)*(17-1)= 192
+
+133*d==1
+
+d==133^-1
+
+133^191 == 13

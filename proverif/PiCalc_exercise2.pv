@@ -1,0 +1,85 @@
+channel c.
+
+type identity.
+type skey.
+type pkey.
+type key.
+
+(*Asymmetric crypto*)
+fun pk(skey): pkey.
+fun aenc(bitstring, pkey): bitstring.
+reduc forall x: bitstring, y: skey; adec(aenc(x,pk(y)),y) = x.
+
+(*Symmetric crypto*)
+fun senc(bitstring, bitstring): bitstring. (*Notice that keys are bitstrings to allow for nonce en- & decryption*)
+reduc forall x: bitstring, y: bitstring; sdec(senc(x, y), y) = x.
+
+fun hash(bitstring): bitstring.
+
+(*Events used for checking authorization property*)
+event begin(identity, identity, bitstring).
+event end(identity, identity, bitstring).
+
+(*Query authorization property*)
+query A: identity, B: identity, s: bitstring; event(end(B, A, s)) ==> event(begin(A, B, s)).
+
+(*Query confidentiality property*)
+query attacker(new secret_).
+
+(*Process A*)
+let clientA(A: identity, PKb: pkey, SKa: skey) =
+  (*send msg1*)
+  new Na: bitstring;
+  new secret_: bitstring;
+  out(c, aenc((A, Na), PKb));
+
+  (*recv. msg2*)
+  in(c, B: identity);
+  event begin(A,B,secret_); (*Authorization begin-event*)
+  in(c, h: bitstring);
+  in(c, x: bitstring);
+  let (Nb: bitstring) = adec(x, SKa) in
+  if hash((Na, B)) = h then (*"table" check*)
+  (*send msg3*)
+  out(c, A);
+  out(c, hash(Nb));
+  out(c, senc(secret_, Na));
+
+  (*recv. msg4*)
+  in(c, =B);
+  in(c, h2: bitstring);
+  if h2 = hash(secret_) then (*useless check*)
+  0.
+
+
+(*Process B*)
+let clientB(B: identity, PKa: pkey, SKb: skey) = 
+  (*recv. msg1*)
+  new Nb: bitstring;
+  in(c, x: bitstring);
+  let (A: identity, Na: bitstring) = adec(x, SKb) in
+  (*send msg2*)
+  out(c, B);
+  out(c, hash((Na,B)));
+  out(c, aenc(Nb, PKa));
+   
+  (*recv. msg3*)
+  in(c, =A);
+  in(c, h: bitstring);
+  in(c, y: bitstring);
+  if  hash(Nb) = h then (*Communication check*)
+  let (secret_: bitstring) = sdec(y, Na) in
+  (*send msg4*)
+  out(c, B);
+  out(c, hash(secret_));
+  event end(B,A,secret_);(*Authorization end-event*)
+  0.
+
+process
+  !( (*ugly, but the only way I could make several different actors*)
+  new SKa: skey; new SKb: skey;
+  let PKa = pk(SKa) in
+  let PKb = pk(SKb) in
+  out(c, PKa); out(c, PKb);
+  (!(new A: identity; clientA(A, PKb, SKa)) | !(new B: identity; clientB(B, PKa, SKb)))
+  )
