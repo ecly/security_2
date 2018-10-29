@@ -1,0 +1,16 @@
+- Can always make a rewrite system from an equational theory.
+
+Eq. theory:
+    plus(A,0) = A
+    mult(A,0) = 0
+
+Rewrite system counterpart:
+    plus(A,0) => A
+    mult(A,0) => 0
+
+
+A rewrite system should be convergent.
+Should converge to some solution that can't be further rewritten.
+
+If you have a rewrite rule l => r, then r is a subterm of l or a constant.
+
