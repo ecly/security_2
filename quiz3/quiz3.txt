@@ -1,0 +1,10 @@
+1.
+    This is NOT a subterm convergent equational theory.
+    3 of the reductions are, however the following is not:
+
+    exp(exp(x,y),z) = exp(exp(x,z),y)
+
+    This is due to the fact that the right hand side is not a subterm of the left hand side.
+
+
+2.
