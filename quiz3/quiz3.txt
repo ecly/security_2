@@ -8,3 +8,24 @@
 
 
 2.
+    Choose terms for pub/priv-key pair (e,d) and encrypted message y,
+    such that an attacker cannot obtain x from y if he doesn't know d, but anyone knowing d can.
+
+    (N,p,q) = 11, 17, 187
+    phi(N) = 160
+    Choose e = 19, which is coprime to phi(N)
+    d = 19^-1 mod 160 = 59
+
+    GenRSA thus outputs (187,19, 59)
+
+    Taking some number x, the adversary will have to compute the 19th root of x module 187
+    without knowing d or the factorization of N.
+
+3.
+
+    We can differentiate between the following parts of the tuple.
+    phi_1 restricted (n,k):  exp(pair(n,s),k)/y
+    phi_2 restricted (n,k):  exp(n,k)/y
+
+    Not sure how exp works on pairs, but it is certainly by setting 's' to something
+    funny that we're able to distinguish between the two frames.
