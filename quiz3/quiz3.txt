@@ -29,3 +29,6 @@
 
     Not sure how exp works on pairs, but it is certainly by setting 's' to something
     funny that we're able to distinguish between the two frames.
+
+    M = exp(y, inv(k))
+    N = n
