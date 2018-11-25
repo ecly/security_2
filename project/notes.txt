@@ -1,0 +1,91 @@
+The Bitcoin Backbone Protocol: Analysis and Applications
+Juan A. Garay, Aggelos Kiayias, Nikos Leonardos
+
+'Bitcoin backbone'
+- Prove `common prefix` and `chain quality`
+    + Static setting
+    + Fixed number of players
+- Propose/analyze applications that can be built on top of backbone
+- Focus on `Byzantine Agreement` (BA)
+    + Not solved by Nakamoto
+    + Propose alternative working assuming adversary hashing power bounded by 1/3
+- Focus on `Public Transaction Ledger`
+    + Guarantees liveness and persistence
+- Proves Bitcoin secure assuming high network synchronicity and hashing power bounded by 1/2
+
+# Introduction
+## Bitcoin
+- POW "Cryptographic Puzzle" SHA-256
+- Prevent double-spending attacks
+    + If payee waits k blocks for transaction then chance of attack is negligible (in k)
+
+Definition 2:
+- Agreement. There is a round after which all honest parties return the same output if queried
+by the environment.
+- Validity. The output returned by an honest party P equals the input of some party P � that is
+honest at the round P’s output is produced.
+
+## Backbone
+Protocol parameterized by three external functions:
+- content validation predicate V(*)
+- input contribution function I(*)
+- chain reading function R(*)
+
+Analyze backbone protocol in
+- static setting
+- synchronous communication network
+- fixed number of $n$ players (n not necessarily known to participant)
+- players CANNOT authenticate each other (cant source message, meaning adversary can spoof)
+
+
+## Common prefix property
+- t=misbehaving parties, n=total parties
+- if t/(n-t) is bounded below 1, then blockchain maintained by honest players possess large common prefix
+- f=probability of succesful POW calculation by honest party during round of protocol execution
+
+## chain quality property
+- ratio of blocks in chain of honest player that are contributed by malicious player is bounded by:
+    t/(n-t)
+
+
+# Application
+## Byzantine agree for (1/3)-bounded adversaries
+- Chain quality should ensure that majority of blocks originate from honest players.
+
+# Model and Definitions
+- Protocol II driven by 'environment' program Z spawns multiple instances running the protocol
+- Programs can be seen as interactive turing machines (ITM)
+
+# The Bitcoin Backbone Protocol
+- G(*), H(*) be cryptographic hash functions with output in {0,1}^K
+- Block is any triple of the form B = <s,x,ctr>
+    + s \in {0,1}^K, x \in {0,1}^*, ctr \in natural numbers
+
+
+## Desired properties of the backbone protocol
+- Page 19, parameter table
+- Common Prefix Property
+- Chain Quality Property
+- Chain Growth Property
+
+# Analysis of the Bitcoin Backbone
+- Honest majorty assumption
+
+## Common Prefix Property
+k >= 2 \lambda f
+## Chain Quality Property
+l >= 2 \lambda f
+
+# Simple POW-based Byzantine Agreement Protocols
+## Byzantine agreement protocol for (1/3)-bounded adversaries
+
+# Public Transaction Ledgers
+- A "book" where transactions are recorded
+
+Protocol II implements a robust public transaction ledger i the q-bounded synchronous setting
+- organize the ledger as a hashchain of blocks satisfying:
+    + persistence (for some depth k)
+    + liveness (also parameterized by k)
+
+# The Bitcoin Backbone in the Bounded-Delay Model
+
