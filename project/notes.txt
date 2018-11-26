@@ -1,6 +1,18 @@
 The Bitcoin Backbone Protocol: Analysis and Applications
 Juan A. Garay, Aggelos Kiayias, Nikos Leonardos
 
+Section 1: Introduction
+Section 2: Present Bitcoin Backbone and Prove properties
+Section 3: Datastructure notation
+Section 4,5,6: Applications built on Backbone protocol
+    - 4: Datastructure analysis
+    - 5: Nakamoto's (insufficient) suggestion for BA + paper's solution for 1/3
+    - 6.1: Robust public ledger
+    - 6.2: Formalize persistence and liveness
+    - 6.3: Protocol for 1/2 adverserial power
+Section 7: Partially synchronous model extension
+Section 8: Future Research
+
 'Bitcoin backbone'
 - Prove `common prefix` and `chain quality`
     + Static setting
@@ -43,10 +55,27 @@ Analyze backbone protocol in
 - if t/(n-t) is bounded below 1, then blockchain maintained by honest players possess large common prefix
 - f=probability of succesful POW calculation by honest party during round of protocol execution
 
-## chain quality property
+## Chain quality property
 - ratio of blocks in chain of honest player that are contributed by malicious player is bounded by:
     t/(n-t)
 
+
+## Chain growth (extra property)
+- number of blocks added to chain during any given number of rounds
+
+- Common prefix and chain quality of Backbone ensure `Agreement` and `Validity` with high probability (BA's basic properties)
+- This turns Bitcoin backbone into a probabilistic BA protocol
+
+
+Bitcoin provides operational transaction ledger un the assumption:
+- the adversary controls less than 1/2 of total hashing power
+- the network synchronizes much faster relative to the POW solution rate
+- digital signatures cannot be forged
+
+If network desynchronizes, then despite honest majority, ledger is not maintained.
+
+Present new BA protocol assuming honest majority:
+- POW fo9r both transactions and for the ledger
 
 # Application
 ## Byzantine agree for (1/3)-bounded adversaries
@@ -89,3 +118,10 @@ Protocol II implements a robust public transaction ledger i the q-bounded synchr
 
 # The Bitcoin Backbone in the Bounded-Delay Model
 
+
+
+# Presentation
+- Present bitcoin backbone
+- Present what it achievies
+- Present what it fails to achieve
+- Present how they improve upon it
