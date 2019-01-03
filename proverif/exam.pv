@@ -1,0 +1,21 @@
+channel c.
+
+fun pk(bitstring):bitstring.
+fun elenc(bitstring,bitstring,bitstring):bitstring.
+fun elrenc(bitstring,bitstring,bitstring):bitstring.
+reduc forall m:bitstring, r:bitstring, x:bitstring;
+     eldec(elenc(m,r,pk(x)),x) = m.
+equation forall m:bitstring, r:bitstring, r2:bitstring, x:bitstring;
+     elrenc(elenc(m,r,pk(x)),r2,pk(x)) = elenc(m,(r,r2),pk(x)).
+
+let elgamal(x: bitstring) =
+    new r1: bitstring; new r2: bitstring; new r3: bitstring;
+    new m: bitstring;
+    let (enc: bitstring) = elenc(m, r1, pk(x)) in
+    out(c, enc);
+    out(c, r2);
+    out(c, pk(x));
+    out(c, elrenc(enc, choice[r2, r3], pk(x))).
+
+process
+    !(new x: bitstring; !elgamal(x))
